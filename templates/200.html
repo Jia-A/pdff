@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='d1.ico') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    #leftHalf {
+       
+       width: 30%;
+       position: absolute;
+       left: 10px;
+       height: 100%;
+    }
+    #rightHalf {
+       
+       width: 70%;
+       position: absolute;
+       right: 10px;
+       height: 100%;
+    }
+    .centered {
+      position: absolute;
+      top: 35%;
+      transform: translate(-50%, -50%);
+      margin-left: 50px;
+      font-size: xx-large;
+      color: black;
+      font-weight: bold;
+    }
+    .container {
+      text-align: center;
+      color: white;
+    }
+    .about {
+      position: absolute;
+      top: 50%;
+      /*left: 50%;*/
+      transform: translate(-50%, -50%);
+      margin-left: 50px;
+      font-size: x-large;
+      color: black;
+      font-weight: bold; 
+    }
+    .content {
+      text-align: center;
+      color: white; 
+    }
+    .top {
+      position: absolute;
+      top: 12%;
+      /*left: 50%;*/
+      transform: translate(-50%, -50%);
+      margin-left: 900px;
+      font-size: x-large;
+      color: black;
+      font-weight: bold; 
+    }
+    .dropdown-item{
+      width: 50%;
+    }
+    .dropdown-menu{
+      width: 5px;
+    }
+    #menu ul{
+      list-style: none;
+    }
+    #menu ul li{
+      text-align: center;
+    }
+    #menu ul ul{
+      margin-left: 70px;
+      top: 0px;
+    }
+    #menu ul li ul {
+      background-color: white;
+      width: 120px;
+      height: 35px;
+      text-align: center;
+      line-height: 35px; 
+    }
+    #menu ul ul li a{
+      text-decoration: none;
+      color: #eee;
+    }
+    #menu {
+      background: #343434;
+      color: #eee;
+      height: 35px;
+      border-bottom: 4px solid #eeeded;
+      margin-top: 70px;
+      margin-right: 200px;
+    }
+
+    #menu ul,
+    #menu li {
+      margin: 0 0;
+      padding: 0 0;
+      list-style: none
+    }
+
+    #menu ul {
+      height: 35px
+    }
+
+    #menu li {
+      float: left;
+      display: inline;
+      position: relative;
+      font: bold 12px Arial;
+      text-shadow: 0 -1px 0 #000;
+      border-right: 1px solid #444;
+      border-left: 1px solid #111;
+      text-transform: uppercase
+    }
+
+    #menu li:first-child {
+      border-left: none
+    }
+
+    #menu a {
+      display: block;
+      line-height: 35px;
+      padding: 0 14px;
+      text-decoration: none;
+      color: #eee;
+    }
+
+    #menu li:hover > a,
+    #menu li a:hover {
+      background: #111
+    }
+
+    #menu input {
+      display: none;
+      margin: 0 0;
+      padding: 0 0;
+      width: 80px;
+      height: 35px;
+      opacity: 0;
+      cursor: pointer
+    }
+
+    #menu label {
+      font: bold 30px Arial;
+      display: none;
+      width: 35px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center
+    }
+
+    #menu label span {
+      font-size: 12px;
+      position: absolute;
+      left: 35px
+    }
+
+    #menu ul.menus {
+      height: auto;
+      width: 180px;
+      background: #111;
+      position: absolute;
+      z-index: 99;
+      display: none;
+      border: 0;
+    }
+
+    #menu ul.menus li {
+      display: block;
+      width: 100%;
+      font: 12px Arial;
+      text-transform: none;
+    }
+
+    #menu li:hover ul.menus {
+      display: block
+    }
+
+    #menu a.home {
+      background: #c00;
+    }
+
+    #menu a.prett {
+      padding: 0 27px 0 14px
+    }
+
+    #menu a.prett::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-width: 6px 5px;
+      border-style: solid;
+      border-color: #eee transparent transparent transparent;
+      position: absolute;
+      top: 15px;
+      right: 9px
+    }
+
+    #menu a.prett.open::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-width: 6px 5px;
+      border-style: solid;
+      border-color: transparent transparent #eee transparent;
+      position: absolute;
+      top: 9px;
+      right: 9px
+    }
+
+    #menu ul.menus a:hover {
+      background: #333;
+    }
+
+    #menu ul.menus .submenu {
+      display: none;
+      position: absolute;
+      left: 100px;
+      background: #111;
+      top: 0;
+      width: 180px;
+    }
+
+    #menu ul.menus .submenu li {
+      background: #111;
+    }
+
+    #menu ul.menus .has-submenu a.open ~ .submenu {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="C:/jam2/project1/static/images/pic.png" id="leftHalf" />
+    <div class="centered">ABOUT</div>
+    <p class="about">Hello guyzz</p>
+  </div>
+    <div class="content">
+      <img src="C:/jam2/project1/static/images/picture.jpg" id="rightHalf" />
+      <div class="top">COURSES</div>
+      <div class="btn-group btn-group-inline" style="margin-top: 50px;">
+        <nav>
+          <ul id='menu'>
+            <li><a class='prett' href='#' title='Menu'>BCA</a>
+              <ul class='menus'>
+                <li class='has-submenu'><a class='prett' title='Dropdown 1'>1st SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="C:/jam2/project1/PDFs/Programming in ANSI C.pdf" title="Sub Menu">Download</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class='has-submenu'><a class='prett' title='Dropdown 2'>2nd SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class='has-submenu'><a class='prett' title='Dropdown 3'>3rd SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class='has-submenu'><a class='prett' title='Dropdown 4'>4th SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class='has-submenu'><a class='prett' title='Dropdown 1'>5th SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <!-- <li><a href="#" title="Sub Menu">AUTHOR 1</a></li>
+                        <li><a href="#" title="Sub Menu">AUTHOR 2</a></li> -->
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class='has-submenu'><a class='prett' title='Dropdown 1'>6th SEM</a>
+                  <ul class='submenu'>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>Mathematics</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>HINDI</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>C</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>PHYSICS</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class='has-submenu'><a class='prett' title='Dropdown 2'>BEE</a>
+                      <ul class='submenu'>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 1</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                        <li class='has-submenu'><a class='prett' title='Dropdown 3'>AUTHOR 2</a>
+                          <ul class='submenu'>
+                            <li><a href="#" title="Sub Menu">LINK 1</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 2</a></li>
+                            <li><a href="#" title="Sub Menu">LINK 3</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+<script type="text/javascript">
+  document.addEventListener('click', function(e) {
+    e = e || window.event;
+    console.log(e);
+    var target = e.target || e.srcElement;
+    console.log(target);
+    if (target.parentElement.className.indexOf('has-submenu') > -1) {
+      e.target.classList.toggle('open');
+    }
+  }, false);
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="{{ url_for('static', filename='d1.ico') }}">
+<style>
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+.container .btn {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container .btn:hover {
+  background-color: black;
+}
+ 
+
+.txt_change{
+  font-size: xx-large;
+  font-style: oblique;
+  color: black;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="C:\jam2\project1\static\images\background.png" alt="Snow" style="width:100%;">
+    <div class="centered txt_change">WELCOME TO SCS PDF</div>
+    <button class="btn">Button</button>
+    <a class="btn btn-primary btn-xl js-scroll-trigger" href="mainpage">Find Out More</a>
+  </div>
+  <section class="content-section bg-light" id="about">
+    <div class="container text-center">
+      <div class="row">
+        <!-- <div class="col-lg-10 mx-auto">
+          <h2>Stylish Portfolio is the perfect theme for your next project!</h2>
+          <p class="lead mb-5">This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
+            <img src="/home/neha/Downloads/cool-background.png" alt="Snow" style="width:100%;">
+            <a href="https://unsplash.com/">Unsplash</a>!</p>
+          <a class="btn btn-dark btn-xl js-scroll-trigger" href="#services">What We Offer</a>
+        </div> -->
+      </div>
+    </div>
+  </section>
+</body>
+</html> 
